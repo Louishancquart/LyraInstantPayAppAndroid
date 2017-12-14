@@ -43,7 +43,8 @@ class NumberTextWatcher(private val editText: EditText, private val formatType: 
         Log.i(T, "::afterTextChanged:Editable $s; Current $current")
         if (s.toString() != current) {
             editText.removeTextChangedListener(this)
-            val formatted_text: String = fromStringToFormattedString(s, formatType, insertingSelected)
+            val formatted_text: String = fromStringToFormattedString(s, formatType)
+
             current = formatted_text
             editText.setText(formatted_text)
             editText.setSelection(formatted_text.length)
@@ -64,22 +65,20 @@ class NumberTextWatcher(private val editText: EditText, private val formatType: 
             return editText.text.toString().replace(",", "").replace(".", "").toInt()
         }
 
-        fun fromStringToFormattedString(s: Editable, formatType: String,
-                                        insertingSelected: Boolean): String {
-            var digits = s.toString() //.replace(",", "").replace(".", "").toDouble()
+        fun fromStringToFormattedString(s: Editable, formatType: String): String {
 
-            if (insertingSelected) {
-                digits = toDouble(digits).toString()
-            }
+            println("s: "+s.toString())
+            var digits  = s.toString().replace(",", "").replace(".", "")
+            var doubleDigits =  digits.toDouble() /100
+            println("doubleDigits: "+ doubleDigits )
+
+
+
             var formatted_text: String
             try {
-                formatted_text = String.format(Locale("en", "IN"), formatType, digits.toFloat())
-
-
+                formatted_text = String.format(Locale("en", "IN"), formatType, doubleDigits)
             } catch (nfe: NumberFormatException) {
-                var v_value = 0.0
-//                v_value = toDouble(digits)
-                formatted_text = String.format(Locale("en", "IN"), formatType, v_value)
+                formatted_text = String.format(Locale("en", "IN"), formatType, 0)
             }
             return formatted_text
         }
@@ -123,7 +122,7 @@ class NumberTextWatcher(private val editText: EditText, private val formatType: 
      */
     private fun updateAmountEditTextState() {
         val currentAmount = editTextValueAmountToInt(editText)
-        if (currentAmount != null && currentAmount > 5099) {
+        if (currentAmount != null && currentAmount > 500000) {
             editText.error = editText.context.resources.getString(R.string.invalid_amount)
         }
     }

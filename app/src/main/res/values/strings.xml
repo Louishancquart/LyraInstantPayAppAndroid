@@ -12,7 +12,7 @@
     <string name="payment_error">Payment failed</string>
     <string name="invalid_input">Invalid input</string>
     <string name="invalid_email">Invalid Email</string>
-    <string name="invalid_amount">Amount must be lower than 51</string>
+    <string name="invalid_amount">Amount must be lower than 5000 </string>
     <string name="error_appears">Error appears</string>
     <string name="production">PRODUCTION</string>
     <string name="back_to_home">Back to home</string>

@@ -94,7 +94,7 @@ class MainActivity : AppCompatActivity() {
     @Suppress("DEPRECATION")
     private fun initListener() {
         //Init EditText amount
-        val numberTextWatcher = NumberTextWatcher(editTextAmount, "%,.0f")
+        val numberTextWatcher = NumberTextWatcher(editTextAmount, "%,.2f")
         editTextAmount.addTextChangedListener(numberTextWatcher)
         editTextAmount.setOnFocusChangeListener(object : View.OnFocusChangeListener {
             override fun onFocusChange(p0: View?, hasFocus: Boolean) {
@@ -125,10 +125,9 @@ class MainActivity : AppCompatActivity() {
                 if (isPaymentValid()) {
 
                     val email = editTextEmail.text.toString()
-                    val amount = editTextAmount.text.toString().replace(",", "").replace(".", "").toInt()/100
-//                    val amount = NumberTextWatcher.Companion.editTextValueAmountToInt(editTextAmount)
+                    val amount = editTextAmount.text.toString().replace(",", "").replace(".", "").toInt()
+
                     val lang = MainActivity.getLang(applicationContext).toString()
-//                    var mode = "PRODUCTION"
 
                     // Go to payment (WebviewActivity)
                     loadingPanel.visibility = View.VISIBLE
@@ -267,7 +266,7 @@ class MainActivity : AppCompatActivity() {
      */
     private fun isAmountValid(): Boolean {
         val currentAmount: Int? = NumberTextWatcher.Companion.editTextValueAmountToInt(editTextAmount)
-        return currentAmount != null && currentAmount > 0 && currentAmount < 500000
+        return currentAmount != null && currentAmount > 0 && currentAmount <= 500000
     }
 
     /**
