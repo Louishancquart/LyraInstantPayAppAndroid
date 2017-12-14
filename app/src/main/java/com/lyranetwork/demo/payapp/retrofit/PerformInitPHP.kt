@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 /**
  * Retrofit performInit response
  */
-class PerformInit {
+class PerformInitPHP {
     @SerializedName("redirect_url")
     var redirectUrl: String? = null
 }

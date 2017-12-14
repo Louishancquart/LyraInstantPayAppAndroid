@@ -34,7 +34,7 @@ class WebviewUrlUtil(data: String) : Serializable {
         get() {
             val status = additionalData.get("vads_trans_status")
             Log.d(TAG, "vads_trans_status = " + status)
-            return status.equals("AUTHORISED")
+            return status.equals("CAPTURED")
         }
 
 

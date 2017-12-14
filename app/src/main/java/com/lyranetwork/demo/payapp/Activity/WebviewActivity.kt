@@ -23,11 +23,6 @@ import com.lyranetwork.demo.payapp.WebviewServices.WebviewUrlUtil
 import kotlinx.android.synthetic.main.activity_payment.*
 import java.net.URLDecoder
 
-
-/**
- * Created by asoler on 20/09/2017.
- */
-
 const val BUNDLE_RESULT = "WebviewUrlUtil"
 const val KEY_EXTRA_EMAIL = "KEY_EXTRA_EMAIL"
 const val KEY_EXTRA_REASON = "KEY_EXTRA_REASON"
@@ -54,12 +49,10 @@ class WebviewActivity : AppCompatActivity() {
         val intent = intent
         val email = intent.getStringExtra("email")
         val amount = intent.getIntExtra("amount", 0)
-        val mode = intent.getStringExtra("mode")
         val lang = intent.getStringExtra("lang")
-        val card = intent.getStringExtra("card")
 
         // Call PaymentService to get in return payment url
-        PaymentService(email, amount, mode, lang, card).getPaymentContext(
+        PaymentService(email, amount).getPaymentContext(
                 { status: Boolean, urlPayment: String? ->
                     // Get an error, show error activity
                     if (!status) {

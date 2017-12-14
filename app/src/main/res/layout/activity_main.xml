@@ -63,7 +63,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/g3379" />
+                    app:srcCompat="@drawable/inr" />
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -76,13 +76,13 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:backgroundTint="@color/bluelyra"
-                        android:imeOptions="actionNext"
                         android:ems="10"
-                        android:maxLength="10"
+                        android:imeOptions="actionNext"
                         android:inputType="number"
+                        android:maxLength="10"
                         android:textColor="@color/bluelyradark2"
                         android:textCursorDrawable="@null"
-                        tools:text="(50 euros max)" />
+                        tools:text="(50 INR max)" />
                 </FrameLayout>
 
             </LinearLayout>
@@ -111,31 +111,12 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:backgroundTint="@color/bluelyra"
-                    android:nextFocusDown="@id/paymentTypeSpinner"
                     android:imeOptions="actionDone"
                     android:ems="10"
                     android:inputType="textEmailAddress"
                     android:textColor="@color/bluelyradark2"
                     android:textCursorDrawable="@null"
                     tools:text="Your email" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="300dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginVertical="5dp"
-                android:background="@android:color/background_light"
-                android:orientation="horizontal">
-
-                <Spinner
-                    android:id="@+id/paymentTypeSpinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:entries="@array/payment_type_mode" />
 
             </LinearLayout>
 
@@ -164,39 +145,6 @@
                 android:layout_gravity="center"
                 android:orientation="horizontal">
 
-                <RadioGroup
-                    android:id="@+id/radioGroup"
-                    android:layout_width="fill_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/radioButtonTest"
-                    android:layout_width="300dp"
-                    android:layout_height="35dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="30dp"
-                    android:layout_weight="1"
-                    android:buttonTint="@color/white"
-                    android:text="@string/test"
-                    android:textColor="@color/white"
-                    android:textOff="@string/test"
-                    android:textOn="@string/test" />
-
-                <RadioButton
-                    android:id="@+id/radioButtonProd"
-                    android:layout_width="300dp"
-                    android:layout_height="35dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="30dp"
-                    android:layout_weight="1"
-                    android:buttonTint="@color/white"
-                    android:text="PRODUCTION"
-                    android:textColor="@color/white"
-                    android:textOff="PRODUCTIONt"
-                    android:textOn="PRODUCTIONt" />
-
-                </RadioGroup>
                 <!--
                 <ToggleButton
                     android:id="@+id/toggleButtonModeTest"

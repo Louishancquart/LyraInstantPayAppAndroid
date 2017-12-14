@@ -17,7 +17,6 @@ import android.text.Editable
 import android.text.Html
 import android.text.TextUtils
 import android.text.TextWatcher
-import android.util.Log
 import android.util.Patterns
 import android.view.Gravity
 import android.view.View
@@ -26,7 +25,6 @@ import android.widget.*
 import com.lyranetwork.demo.payapp.BuildConfig
 import com.lyranetwork.demo.payapp.R
 import com.lyranetwork.demo.payapp.Util.MyContextWrapper
-import com.lyranetwork.demo.payapp.adapter.SpinnerAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
@@ -60,7 +58,7 @@ class MainActivity : AppCompatActivity() {
         updateFlagWithCurrentLang()
 
         //Default mode
-        activateTestMode()
+        //mode()
 
         //Force progress bar color
         progressBar.getIndeterminateDrawable().setColorFilter(resources.getColor(R.color.bluelyradark),
@@ -78,14 +76,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
+
     /**
      * Init EditText with stored values
      */
     private fun initEditText() {
         editTextEmail.setText(getEmail(applicationContext), TextView.BufferType.NORMAL)
-        val amount = getAmount(applicationContext)
+        val amount: String = getAmount(applicationContext)
         editTextAmount.setText(amount, TextView.BufferType.NORMAL)
-        paymentTypeSpinner.setSelection(getPaymentType(applicationContext))
     }
 
 
@@ -94,8 +93,8 @@ class MainActivity : AppCompatActivity() {
      */
     @Suppress("DEPRECATION")
     private fun initListener() {
-//        //Init EditText amount
-        val numberTextWatcher = NumberTextWatcher(editTextAmount, "%,.2f")
+        //Init EditText amount
+        val numberTextWatcher = NumberTextWatcher(editTextAmount, "%,.0f")
         editTextAmount.addTextChangedListener(numberTextWatcher)
         editTextAmount.setOnFocusChangeListener(object : View.OnFocusChangeListener {
             override fun onFocusChange(p0: View?, hasFocus: Boolean) {
@@ -126,19 +125,14 @@ class MainActivity : AppCompatActivity() {
                 if (isPaymentValid()) {
 
                     val email = editTextEmail.text.toString()
-                    val amount = NumberTextWatcher.Companion.editTextValueAmountInCtsInEuros(editTextAmount)
+                    val amount = editTextAmount.text.toString().replace(",", "").replace(".", "").toInt()/100
+//                    val amount = NumberTextWatcher.Companion.editTextValueAmountToInt(editTextAmount)
                     val lang = MainActivity.getLang(applicationContext).toString()
-                    val card = paymentTypeSpinner.selectedItem.toString()
-
-                    var mode = ""
-                    when (radioGroup.checkedRadioButtonId) {
-                        R.id.radioButtonTest -> mode = "TEST"
-                        R.id.radioButtonProd -> mode = "PRODUCTION"
-                    }
+//                    var mode = "PRODUCTION"
 
                     // Go to payment (WebviewActivity)
                     loadingPanel.visibility = View.VISIBLE
-                    openWebViewActivity(email, amount, mode, lang, card)
+                    openWebViewActivity(email, amount, lang)
 
                 } else {
                     if (!isAmountValid()) {
@@ -187,45 +181,12 @@ class MainActivity : AppCompatActivity() {
                 builder.create().show()
             }
         })
-
-//        //Payment Type Spinner
-        val textArray = arrayOf(resources.getString(R.string.all), "CB", "Visa", "Mastercard")
-        val imageArray = arrayOf<Int>(R.drawable.card, R.drawable.cb, R.drawable.visa, R.drawable.mastercard)
-        val adapter = SpinnerAdapter(this, R.layout.row, textArray, imageArray)
-        paymentTypeSpinner.setAdapter(adapter)
-        paymentTypeSpinner.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-                //Nothing
-            }
-
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
-                storePaymentType(position, applicationContext)
-            }
-        })
-
-
-        radioGroup.setOnCheckedChangeListener(object: RadioGroup.OnCheckedChangeListener {
-            override fun onCheckedChanged(p0: RadioGroup?, p1: Int) {
-                var rb = p0?.findViewById<RadioButton>(p1)
-                if (null != rb && p1 > -1) {
-                    Log.d(TAG, "check "+p1)
-
-                }
-            }
-        })
     }
 
     override fun onResume() {
         super.onResume()
         loadingPanel.visibility = View.GONE
     }
-
-
-    private fun activateTestMode() {
-        radioGroup.clearCheck()
-        radioGroup.check(R.id.radioButtonTest)
-    }
-
 
     /**
      * Reload MainActivity to update language
@@ -245,7 +206,6 @@ class MainActivity : AppCompatActivity() {
         // Erase values on destroy
         storeAmount("0,00", applicationContext)
         storeEmail("", applicationContext)
-        storePaymentType(0, applicationContext)
         if (isFinishing()) {
             //call some method
         }
@@ -256,7 +216,6 @@ class MainActivity : AppCompatActivity() {
         // Store values onPause (values retrieved after language switched)
         storeAmount(editTextAmount.text.toString(), applicationContext)
         storeEmail(editTextEmail.text.toString(), applicationContext)
-        storePaymentType(paymentTypeSpinner.selectedItemPosition, applicationContext)
     }
 
     override fun onBackPressed() {
@@ -293,47 +252,31 @@ class MainActivity : AppCompatActivity() {
      * Ready to make a payment?
      */
     private fun isPaymentValid(): Boolean {
-        if (isAmountValid()) {
-            return true
-        } else {
-            return false
-        }
+        return isAmountValid()
     }
 
     /**
      * Is email valid (compare with a regular expression)
      */
     private fun isEmailValid(): Boolean {
-        if (!TextUtils.isEmpty(editTextEmail?.text) && !Patterns.EMAIL_ADDRESS.matcher(editTextEmail?.text).matches()) {
-            return false
-        } else {
-            return true
-        }
+        return !(!TextUtils.isEmpty(editTextEmail?.text) && !Patterns.EMAIL_ADDRESS.matcher(editTextEmail?.text).matches())
     }
 
     /**
-     * Is amount valid (amount < 51)
+     * Is amount valid (amount < 5000)
      */
     private fun isAmountValid(): Boolean {
-        val currentAmount: Int? = NumberTextWatcher.Companion.editTextValueAmountInCtsInEuros(editTextAmount)
-        if (currentAmount != null && currentAmount > 0 && currentAmount < 5100) {
-            return true
-        } else {
-            return false
-        }
+        val currentAmount: Int? = NumberTextWatcher.Companion.editTextValueAmountToInt(editTextAmount)
+        return currentAmount != null && currentAmount > 0 && currentAmount < 500000
     }
 
     /**
      * Open WebviewActivity (contains a WebView)
      */
-
-    private fun openWebViewActivity(email: String, amount: Int, mode: String, lang: String, card: String) {
+    private fun openWebViewActivity(email: String, amount: Int, lang: String) {
         val intent = Intent(this, WebviewActivity::class.java)
         intent.putExtra("email", email)
         intent.putExtra("amount", amount)
-        intent.putExtra("mode", mode)
-        intent.putExtra("lang", lang)
-        intent.putExtra("card", card)
         startActivity(intent)
     }
 
@@ -453,23 +396,6 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        /**
-         * Store amount on SharedPreferences
-         */
-        fun storePaymentType(paymentType: Int, context: Context) {
-            val editor = context.getSharedPreferences(MY_PREFS_NAME, Context.MODE_PRIVATE).edit()
-            editor.putInt("paymentType", paymentType)
-            editor.apply()
-        }
-
-        /**
-         * Get amount from SharedPreferences
-         */
-        fun getPaymentType(context: Context): Int {
-            val prefs = context.getSharedPreferences(MY_PREFS_NAME, Context.MODE_PRIVATE)
-            return prefs.getInt("paymentType", 0)
-        }
-
     }
 
     /**
@@ -483,10 +409,10 @@ class MainActivity : AppCompatActivity() {
              * Convert an enum language to a locale with 2 characters
              */
             fun identifier(languagesEnum: LanguagesEnum): String {
-                when (languagesEnum) {
-                    ENGLISH -> return "en"
-                    FRENCH -> return "fr"
-                    SPANISH -> return "es"
+                return when (languagesEnum) {
+                    ENGLISH -> "en"
+                    FRENCH -> "fr"
+                    SPANISH -> "es"
                 }
             }
         }
