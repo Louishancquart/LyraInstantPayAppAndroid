@@ -2,6 +2,7 @@ package com.lyranetwork.demo.payapp.Activity
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.ActivityOptionsCompat
@@ -44,19 +45,26 @@ class PaymentLinkReceivedActivity : AppCompatActivity() {
                         Log.d("PaymentLink", "Payment link gathered: @2nd activity = " + urlPayment)
 
 
-
+//                        try {
+//                            // generate a 150x150 QR code
+//                            Bitmap bm = encodeAsBitmap(barcode_content, BarcodeFormat.QR_CODE, 150, 150);
+//
+//                            if(bm != null) {
+//                                image_view.setImageBitmap(bm);
+//                            }
+//                        } catch (WriterException e) { //eek }
 
 
                         buttonShareLink.setOnClickListener(object : View.OnClickListener{
                             override fun onClick(p0: View?) {
-//
-//                                val sendIntent = Intent()
-//                                sendIntent.action = Intent.ACTION_SEND
-//                                sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.")
-//                                sendIntent.type = "text/plain"
-//                                startActivity(sendIntent)
 
-                                goToMainActivity()
+                                val sendIntent = Intent()
+                                sendIntent.action = Intent.ACTION_SEND
+                                sendIntent.putExtra(Intent.EXTRA_TEXT, urlPayment)
+                                sendIntent.type = "text/plain"
+                                startActivity(sendIntent)
+
+//                                goToMainActivity()
                             }
                         })
 
