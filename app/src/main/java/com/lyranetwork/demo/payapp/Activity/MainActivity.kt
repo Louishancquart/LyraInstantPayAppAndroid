@@ -17,7 +17,6 @@ import android.text.Editable
 import android.text.Html
 import android.text.TextUtils
 import android.text.TextWatcher
-import android.util.Patterns
 import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
@@ -82,7 +81,7 @@ class MainActivity : AppCompatActivity() {
      * Init EditText with stored values
      */
     private fun initEditText() {
-        editTextEmail.setText(getEmail(applicationContext), TextView.BufferType.NORMAL)
+        editTextOrderID.setText(getEmail(applicationContext), TextView.BufferType.NORMAL)
         val amount: String = getAmount(applicationContext)
         editTextAmount.setText(amount, TextView.BufferType.NORMAL)
     }
@@ -108,12 +107,12 @@ class MainActivity : AppCompatActivity() {
         })
 
 
-        //Init EditText email
-        editTextEmail?.addTextChangedListener(object : TextWatcher {
+        //Init EditText orderID
+        editTextOrderID?.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun afterTextChanged(p0: Editable?) {
-                updateEmailEditTextState()
-                storeEmail(editTextEmail.text.toString(), applicationContext)
+                updateOrderIDEditTextState()
+                storeOrderID(editTextOrderID.text.toString(), applicationContext)
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
@@ -124,14 +123,15 @@ class MainActivity : AppCompatActivity() {
             override fun onClick(v: View) {
                 if (isPaymentValid()) {
 
-                    val email = editTextEmail.text.toString()
+                    val orderID = editTextOrderID.text.toString()
                     val amount = editTextAmount.text.toString().replace(",", "").replace(".", "").toInt()
 
                     val lang = MainActivity.getLang(applicationContext).toString()
 
                     // Go to payment (WebviewActivity)
                     loadingPanel.visibility = View.VISIBLE
-                    openWebViewActivity(email, amount, lang)
+//                    openWebViewActivity(orderID, amount, lang)
+                    openPaymentLinkReceivedActivity(orderID, amount, lang)
 
                 } else {
                     if (!isAmountValid()) {
@@ -139,10 +139,10 @@ class MainActivity : AppCompatActivity() {
                                 R.string.invalid_input)
                         else editTextAmount.error = resources.getString(R.string.invalid_amount)
                     }
-                    if (!isEmailValid()) {
-                        if (TextUtils.isEmpty(editTextEmail?.text)) editTextEmail.error = resources.getString(
+                    if (!isOrderValid()) {
+                        if (TextUtils.isEmpty(editTextOrderID?.text)) editTextOrderID.error = resources.getString(
                                 R.string.invalid_input)
-                        else editTextEmail.error = resources.getString(R.string.invalid_email)
+                        else editTextOrderID.error = resources.getString(R.string.invalid_order)
                     }
                 }
             }
@@ -204,7 +204,7 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
         // Erase values on destroy
         storeAmount("0,00", applicationContext)
-        storeEmail("", applicationContext)
+        storeOrderID("", applicationContext)
         if (isFinishing()) {
             //call some method
         }
@@ -214,7 +214,7 @@ class MainActivity : AppCompatActivity() {
         super.onPause()
         // Store values onPause (values retrieved after language switched)
         storeAmount(editTextAmount.text.toString(), applicationContext)
-        storeEmail(editTextEmail.text.toString(), applicationContext)
+        storeOrderID(editTextOrderID.text.toString(), applicationContext)
     }
 
     override fun onBackPressed() {
@@ -239,11 +239,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
-     * Display error on email editText if value not valid
+     * Display error on orderID editText if value not valid
      */
-    private fun updateEmailEditTextState() {
-        if (!TextUtils.isEmpty(editTextEmail.text) && !Patterns.EMAIL_ADDRESS.matcher(editTextEmail.text).matches()) {
-            editTextEmail.error = resources.getString(R.string.invalid_email)
+    private fun updateOrderIDEditTextState() {
+        if (TextUtils.isEmpty(editTextOrderID.text) ) {
+            editTextOrderID.error = resources.getString(R.string.invalid_order)
         }
     }
 
@@ -255,10 +255,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
-     * Is email valid (compare with a regular expression)
+     * Is orderID valid (compare with a regular expression)
      */
-    private fun isEmailValid(): Boolean {
-        return !(!TextUtils.isEmpty(editTextEmail?.text) && !Patterns.EMAIL_ADDRESS.matcher(editTextEmail?.text).matches())
+    private fun isOrderValid(): Boolean {
+        return !TextUtils.isEmpty(editTextOrderID?.text)
     }
 
     /**
@@ -272,12 +272,22 @@ class MainActivity : AppCompatActivity() {
     /**
      * Open WebviewActivity (contains a WebView)
      */
-    private fun openWebViewActivity(email: String, amount: Int, lang: String) {
+    private fun openWebViewActivity(orderID: String, amount: Int, lang: String) {
         val intent = Intent(this, WebviewActivity::class.java)
-        intent.putExtra("email", email)
+        intent.putExtra("orderID", orderID)
         intent.putExtra("amount", amount)
         startActivity(intent)
     }
+
+        /**
+         * Open WebviewActivity (contains a WebView)
+         */
+        private fun openPaymentLinkReceivedActivity(orderID: String, amount: Int, lang: String) {
+            val intent = Intent(this, PaymentLinkReceivedActivity::class.java)
+            intent.putExtra("orderID", orderID)
+            intent.putExtra("amount", amount)
+            startActivity(intent)
+        }
 
     /**
      * Set status bar color to match with the background
@@ -352,20 +362,20 @@ class MainActivity : AppCompatActivity() {
         }
 
         /**
-         * Store email on SharedPreferences
+         * Store orderID on SharedPreferences
          */
-        fun storeEmail(email: String, context: Context) {
+        fun storeOrderID(orderID: String, context: Context) {
             val editor = context.getSharedPreferences(MY_PREFS_NAME, Context.MODE_PRIVATE).edit()
-            editor.putString("email", email)
+            editor.putString("orderID", orderID)
             editor.apply()
         }
 
         /**
-         * Get email from SharedPreferences
+         * Get orderID from SharedPreferences
          */
         fun getEmail(context: Context): String {
             val prefs = context.getSharedPreferences(MY_PREFS_NAME, Context.MODE_PRIVATE)
-            val restoredEmail = prefs.getString("email", "")
+            val restoredEmail = prefs.getString("orderID", "")
             if (restoredEmail != null) {
                 return restoredEmail
             } else {

@@ -30,7 +30,7 @@ class PaymentFailureActivity : AppCompatActivity() {
                 errorTextView.setText(resources.getString(R.string.refused_payment))
         }
 
-        buttonBackToHomeFailed.setOnClickListener(object : View.OnClickListener{
+        buttonBackToHomeFail.setOnClickListener(object : View.OnClickListener{
             override fun onClick(p0: View?) {
                 goToMainActivity()
             }

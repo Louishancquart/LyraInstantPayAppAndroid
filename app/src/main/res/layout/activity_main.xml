@@ -82,7 +82,8 @@
                         android:maxLength="10"
                         android:textColor="@color/bluelyradark2"
                         android:textCursorDrawable="@null"
-                        tools:text="(50 INR max)" />
+                        android:visibility="visible"
+                        tools:text="amount" />
                 </FrameLayout>
 
             </LinearLayout>
@@ -106,17 +107,18 @@
                     app:srcCompat="@drawable/envelope" />
 
                 <EditText
-                    android:id="@+id/editTextEmail"
+                    android:id="@+id/editTextOrderID"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:backgroundTint="@color/bluelyra"
-                    android:imeOptions="actionDone"
                     android:ems="10"
-                    android:inputType="textEmailAddress"
+                    android:imeOptions="actionDone"
+                    android:inputType="number"
                     android:textColor="@color/bluelyradark2"
                     android:textCursorDrawable="@null"
-                    tools:text="Your email" />
+                    android:visibility="visible"
+                    tools:text="Your Order ID" />
 
             </LinearLayout>
 

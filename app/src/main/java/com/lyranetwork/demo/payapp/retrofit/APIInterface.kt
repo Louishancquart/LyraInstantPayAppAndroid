@@ -12,7 +12,7 @@ internal interface APIInterface {
     @FormUrlEncoded
     @POST("performInitPHP/")
     fun doGetPerformInitPHP(
-            @Field("email") email: String,
+            @Field("order_ID") orderID: String,
             @Field("amount") amount: String
     ): Call<PerformInitPHP>
 }

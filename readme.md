@@ -1,6 +1,6 @@
 This repo is intended to demonstrate how mobile payment is working; based on following components :
 
-* Activity to collect payment information (email, amount) and submit payment (Casual payment & Apple Pay if enabled)
+* Activity to collect payment information (orderID, amount) and submit payment (Casual payment & Apple Pay if enabled)
 * Activity to indicate payment result
 * Few class utils to perform payment workflow (communication with your backend, detect end of payment, detect expiration)
 
@@ -73,14 +73,14 @@ It offer a completion handler, to use in **WebviewViewController**, returning tw
 
 ```kotlin
 fun getPaymentContext(complete: (Boolean, String?) -> Unit) {
-    if (email.isEmpty()) {
-        email = "noemail"
+    if (orderID.isEmpty()) {
+        orderID = "noemail"
     }
 
     // Init Retrofit
     apiInterface = APIClient.client.create(APIInterface::class.java)
 
-    val call = apiInterface.doGetPerformInit(email, amount.toString(), mode, lang, card)
+    val call = apiInterface.doGetPerformInit(orderID, amount.toString(), mode, lang, card)
     call.enqueue(object : Callback<PerformInit> {
         override fun onResponse(call: Call<PerformInit>?, response: Response<PerformInit>?) {
             Log.d("TAG", response?.code().toString() + "")
@@ -143,7 +143,7 @@ WebviewActivity is an activity dealing with payment workflow :
 
 ```kotlin
 // Call PaymentService to get in return payment url
-PaymentService(email, amount, mode, lang, card).getPaymentContext(
+PaymentService(orderID, amount, mode, lang, card).getPaymentContext(
         { status: Boolean, urlPayment: String? ->
             // Get an error, show error activity
             if (!status) {

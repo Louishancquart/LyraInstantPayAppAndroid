@@ -9,7 +9,7 @@
     <string name="payment_success">Paiement accepté</string>
     <string name="powered_by_lyra">Propulsé par Lyra</string>
     <string name="invalid_input">Saisie invalide</string>
-    <string name="invalid_email">Email invalide</string>
+    <string name="invalid_order">Email invalide</string>
     <string name="invalid_amount">Le montant doit être inférieur à 51 Euros</string>
     <string name="error_appears">Une erreur est survenue</string>
     <string name="loading">Loading</string>
@@ -25,6 +25,8 @@
     <string name="areyousureexit">Êtes-vous sûr de vouloir quitter?</string>
     <string name="yes">Oui</string>
     <string name="no">Non</string>
+    <string name="payment_share_link">Partager le lien de paiement</string>
+
 
     <string name="refused_payment">Paiement refusé</string>
     <string name="abandonned_payment">Paiement abandonné</string>

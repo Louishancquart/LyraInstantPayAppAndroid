@@ -56,15 +56,16 @@
                     app:srcCompat="@drawable/error" />
 
                 <TextView
-                    android:id="@+id/errorTextView"
+                    android:id="@+id/QRCodeTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="5dp"
                     android:gravity="center"
-                    android:text="@string/payment_error"
+                    android:text="QR code"
                     android:textColor="@color/red"
                     android:textSize="24sp" />
+
             </LinearLayout>
 
             <!--
@@ -81,20 +82,20 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/buttonBackToHomeFail"
+            android:id="@+id/buttonShareLink"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="100dp"
             android:background="@color/white"
-            android:text="@string/back_to_home"
+            android:text="@string/payment_share_link"
             android:textColor="@color/bluelyra"
             android:textSize="18sp" />
 
     </LinearLayout>
 
     <TextView
-        android:id="@+id/textViewPoweredByFailed"
+        android:id="@+id/textViewPoweredByLinkReceived"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="3dp"

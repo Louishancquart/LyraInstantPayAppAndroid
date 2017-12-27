@@ -47,12 +47,12 @@ class WebviewActivity : AppCompatActivity() {
 
         // Get the Intent that started this activity and extract the string
         val intent = intent
-        val email = intent.getStringExtra("email")
+        val orderID = intent.getStringExtra("orderID")
         val amount = intent.getIntExtra("amount", 0)
         val lang = intent.getStringExtra("lang")
 
         // Call PaymentService to get in return payment url
-        PaymentService(email, amount).getPaymentContext(
+        PaymentService(orderID, amount).getPaymentContext(
                 { status: Boolean, urlPayment: String? ->
                     // Get an error, show error activity
                     if (!status) {

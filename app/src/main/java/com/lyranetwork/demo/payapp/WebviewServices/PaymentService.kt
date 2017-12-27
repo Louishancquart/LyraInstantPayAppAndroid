@@ -14,8 +14,8 @@ import retrofit2.Response
  * Created by asoler on 16/10/2017.
  */
 
-class PaymentService(_email: String, _amount: Int) {
-    var email = _email
+class PaymentService(_orderID: String, _amount: Int) {
+    var orderID = _orderID
     val amount = _amount
 
     private lateinit var apiInterface: APIInterface
@@ -25,17 +25,17 @@ class PaymentService(_email: String, _amount: Int) {
      * Call PerformInit WS (GET) with retrofit
      **/
     fun getPaymentContext(complete: (Boolean, String?) -> Unit) {
-        Log.d(TAG, "email = " + email)
+        Log.d(TAG, "orderID = " + orderID)
         Log.d(TAG, "amount = " + amount)
 
-        if (email.isEmpty()) {
-            email = "noemail"
+        if (orderID.isEmpty()) {
+            orderID = "noorder"
         }
 
         // Init Retrofit
         apiInterface = APIClient.client.create(APIInterface::class.java)
 
-        val call = apiInterface.doGetPerformInitPHP(email, amount.toString())
+        val call = apiInterface.doGetPerformInitPHP(orderID, amount.toString())
 
         call.enqueue(object : Callback<PerformInitPHP> {
             override fun onResponse(call: Call<PerformInitPHP>?, response: Response<PerformInitPHP>?) {

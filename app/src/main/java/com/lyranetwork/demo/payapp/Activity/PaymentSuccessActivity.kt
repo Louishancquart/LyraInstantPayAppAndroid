@@ -20,7 +20,7 @@ class PaymentSuccessActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.paymentsuccess)
 
-        //Update success wording with the email stored on response
+        //Update success wording with the orderID stored on response
         if (getIntent().hasExtra(KEY_EXTRA_EMAIL)) {
             val email = getIntent().getStringExtra(KEY_EXTRA_EMAIL)
             textViewEmailSentTo.visibility = View.VISIBLE

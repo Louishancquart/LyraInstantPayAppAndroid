@@ -10,8 +10,9 @@
     <string name="error_occured">An error occurs : %1$s</string>
     <string name="payment_success">Payment successful</string>
     <string name="payment_error">Payment failed</string>
+    <string name="payment_share_link">Share Payment Link</string>
     <string name="invalid_input">Invalid input</string>
-    <string name="invalid_email">Invalid Email</string>
+    <string name="invalid_order">Invalid Order</string>
     <string name="invalid_amount">Amount must be lower than 5000 </string>
     <string name="error_appears">Error appears</string>
     <string name="production">PRODUCTION</string>
