@@ -26,11 +26,13 @@
     <string name="yes">Sí</string>
     <string name="no">No</string>
     <string name="payment_share_link">Compartir Enlace De Pago</string>
+    <string name="qr_code_image">qrcode image</string>
+    <string name="payzen_logo">payzen logo</string>
 
 
 
     <string name="refused_payment">Pago rechazado</string>
     <string name="abandonned_payment">Pago cancelado</string>
     <string name="expired_payment">Pago expirado</string>
-    <string name="network_error_payment">Operacion imposible, problema de conectividad</string>
+    <string name="network_error_payment">Operación imposible, problema de conectividad</string>
 </resources>

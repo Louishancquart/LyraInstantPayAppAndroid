@@ -1,5 +1,6 @@
 package com.lyranetwork.demo.payapp.Activity
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -9,6 +10,7 @@ import android.support.v4.app.ActivityOptionsCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import com.lyranetwork.demo.payapp.BuildConfig
 import com.lyranetwork.demo.payapp.R
 import com.lyranetwork.demo.payapp.Util.MyContextWrapper
@@ -16,19 +18,27 @@ import com.lyranetwork.demo.payapp.WebviewServices.PaymentService
 import kotlinx.android.synthetic.main.paymentfailed.*
 import kotlinx.android.synthetic.main.paymentlinkreceived.*
 
+import net.glxn.qrgen.android.QRCode
+
 /**
  * Display the failed payment
  */
 class PaymentLinkReceivedActivity : AppCompatActivity() {
+
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.paymentlinkreceived)
 
         // Get the Intent that started this activity and extract the string
         val intent = intent
+
         val orderID = intent.getStringExtra("orderID")
         val amount = intent.getIntExtra("amount", 0)
-        val lang = intent.getStringExtra("lang")
+//        val lang = intent.getStringExtra("lang")
+
+
+
 
 
         // Call PaymentService to get in return payment url
@@ -36,23 +46,22 @@ class PaymentLinkReceivedActivity : AppCompatActivity() {
                 { status: Boolean, urlPayment: String? ->
                     // Get an error, show error activity
                     if (!status) {
-                        val intent = Intent(applicationContext, PaymentFailureActivity::class.java)
-                        intent.putExtra(KEY_EXTRA_REASON,"NETWORK")
+                        Intent(applicationContext, PaymentFailureActivity::class.java)
+                                .putExtra(KEY_EXTRA_REASON,"NETWORK")
                         startActivity(intent, "")
 
                         // Fine, we get a payment url
                     } else {
                         Log.d("PaymentLink", "Payment link gathered: @2nd activity = " + urlPayment)
 
+                        /*
+                       * Generate bitmap from the text provided,
+                       * The QR code can be saved using other methods such as stream(), file(), to() etc.
+                       * */
+                        val bitmap = QRCode.from(urlPayment).withSize(300, 300).bitmap()
+                        imageViewQRCode.setImageBitmap(bitmap)
 
-//                        try {
-//                            // generate a 150x150 QR code
-//                            Bitmap bm = encodeAsBitmap(barcode_content, BarcodeFormat.QR_CODE, 150, 150);
-//
-//                            if(bm != null) {
-//                                image_view.setImageBitmap(bm);
-//                            }
-//                        } catch (WriterException e) { //eek }
+
 
 
                         buttonShareLink.setOnClickListener(object : View.OnClickListener{

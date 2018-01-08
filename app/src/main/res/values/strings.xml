@@ -17,6 +17,9 @@
     <string name="error_appears">Error appears</string>
     <string name="production">PRODUCTION</string>
     <string name="back_to_home">Back to home</string>
+    <string name="qr_code_image">qrcode image</string>
+    <string name="payzen_logo">payzen logo</string>
+
 
     <string name="language">Your language</string>
     <string name="french">French</string>

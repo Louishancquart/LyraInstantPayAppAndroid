@@ -26,6 +26,8 @@
     <string name="yes">Oui</string>
     <string name="no">Non</string>
     <string name="payment_share_link">Partager le lien de paiement</string>
+    <string name="qr_code_image">image qrcode</string>
+    <string name="payzen_logo">payzen logo</string>
 
 
     <string name="refused_payment">Paiement refusé</string>
