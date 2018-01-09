@@ -28,6 +28,10 @@
     <string name="payment_share_link">Compartir Enlace De Pago</string>
     <string name="qr_code_image">qrcode image</string>
     <string name="payzen_logo">payzen logo</string>
+    <string name="check_status">comprobar estado</string>
+    <string name="orderID">Referencia</string>
+
+
 
 
 

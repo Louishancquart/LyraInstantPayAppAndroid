@@ -9,8 +9,16 @@ import retrofit2.http.*
  */
 internal interface APIInterface {
 
+//    @FormUrlEncoded
+//    @POST("performInitPHP/")
+//    fun doGetPerformInitPHP(
+//            @Field("order_ID") orderID: String,
+//            @Field("amount") amount: String
+//    ): Call<PerformInitPHP>
+
+
     @FormUrlEncoded
-    @POST("performInitPHP/")
+    @POST("raw_payment_test.php")
     fun doGetPerformInitPHP(
             @Field("order_ID") orderID: String,
             @Field("amount") amount: String

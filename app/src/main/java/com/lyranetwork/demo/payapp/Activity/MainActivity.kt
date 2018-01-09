@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         // Set status bar color
         setStatusBarColor()
 
-        //Init EditText with stored values
+        //Init EditText with stored value1000s
         initEditText()
 
         //Update the flag with the selected language

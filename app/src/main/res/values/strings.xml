@@ -19,6 +19,8 @@
     <string name="back_to_home">Back to home</string>
     <string name="qr_code_image">qrcode image</string>
     <string name="payzen_logo">payzen logo</string>
+    <string name="check_status">check status</string>
+    <string name="orderID">Order ID</string>
 
 
     <string name="language">Your language</string>
