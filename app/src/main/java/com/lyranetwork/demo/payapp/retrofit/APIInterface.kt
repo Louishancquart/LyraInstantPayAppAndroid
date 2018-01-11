@@ -18,7 +18,7 @@ internal interface APIInterface {
 
 
     @FormUrlEncoded
-    @POST("raw_payment_test.php")
+    @POST("raw_payment_test2.php")
     fun doGetPerformInitPHP(
             @Field("order_ID") orderID: String,
             @Field("amount") amount: String

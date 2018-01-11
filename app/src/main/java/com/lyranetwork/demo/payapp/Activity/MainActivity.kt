@@ -44,6 +44,9 @@ class MainActivity : AppCompatActivity() {
         // Listeners
         initListener()
 
+        //get credentials if it exist
+        checkForCredentials()
+
         // Update "Powered by" with version
         textViewPoweredBy.setText(resources.getString(R.string.powered_by_lyra) + " v" + BuildConfig.VERSION_NAME)
 
@@ -85,6 +88,24 @@ class MainActivity : AppCompatActivity() {
         val amount: String = getAmount(applicationContext)
         editTextAmount.setText(amount, TextView.BufferType.NORMAL)
     }
+
+    /**
+     * Init Credential with stored values
+     */
+    private fun checkForCredentials() {
+        val shopID = CredentialsActivity.getShopID(applicationContext)
+        val certificate = CredentialsActivity.getCertificate(applicationContext)
+
+        println("shopID:" + shopID)
+
+        if( shopID.isBlank() || certificate.isBlank() ){
+        //go to credentials activity
+         val intent = Intent(this, CredentialsActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
+
 
 
     /**
@@ -285,7 +306,7 @@ class MainActivity : AppCompatActivity() {
         private fun openPaymentLinkReceivedActivity(orderID: String, amount: Int, lang: String) {
             val intent = Intent(this, PaymentLinkReceivedActivity::class.java)
             intent.putExtra("orderID", orderID)
-            intent.putExtra("amount", amount)
+            intent.putExtra("amount", amount/100) 
             startActivity(intent)
         }
 
@@ -404,6 +425,7 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
+
 
     }
 

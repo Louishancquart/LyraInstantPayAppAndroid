@@ -57,9 +57,13 @@ class PaymentLinkReceivedActivity : AppCompatActivity() {
                 { status: Boolean, urlPayment: String? ->
                     // Get an error, show error activity
                     if (!status) {
-                        Intent(applicationContext, PaymentFailureActivity::class.java)
-                                .putExtra(KEY_EXTRA_REASON, "NETWORK")
-                        startActivity(intent, "")
+//                        println("status: " + status.toString())
+//                        Intent(applicationContext, PaymentFailureActivity::class.java)
+//                                .putExtra(KEY_EXTRA_REASON, "NETWORK")
+//                        startActivity(intent)
+
+                        textViewPoweredByLinkReceived.setText("NETWORK ERROR!!!!")
+                        textViewPoweredByLinkReceived.setTextColor(resources.getColor(R.color.red))
 
                         // Fine, we get a payment url
                     } else {
@@ -71,7 +75,6 @@ class PaymentLinkReceivedActivity : AppCompatActivity() {
                        * */
                         val bitmap = QRCode.from(urlPayment).withSize(600, 600).bitmap()
                         imageViewQRCode.setImageBitmap(bitmap)
-
 
 
 
@@ -101,12 +104,14 @@ class PaymentLinkReceivedActivity : AppCompatActivity() {
                             }
                         })
 
+
+                        textViewPoweredByLinkReceived.setText(resources.getString(R.string.powered_by_lyra) + " v" + BuildConfig.VERSION_NAME)
+
                     }
                 }
         )
 
 
-        textViewPoweredByLinkReceived.setText(resources.getString(R.string.powered_by_lyra) + " v" + BuildConfig.VERSION_NAME)
     }
 
 

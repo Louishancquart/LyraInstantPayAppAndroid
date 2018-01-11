@@ -30,6 +30,9 @@
         <activity
             android:name=".Activity.PaymentLinkReceivedActivity"
             android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".Activity.CredentialsActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

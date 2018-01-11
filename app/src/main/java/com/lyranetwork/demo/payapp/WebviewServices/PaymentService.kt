@@ -37,12 +37,13 @@ class PaymentService(_orderID: String, _amount: Int) {
 
         val call = apiInterface.doGetPerformInitPHP(orderID, amount.toString())
 
+
         call.enqueue(object : Callback<PerformInitPHP> {
             override fun onResponse(call: Call<PerformInitPHP>?, response: Response<PerformInitPHP>?) {
                 Log.d("TAG", response?.code().toString() + "")
 
                 if (response?.code() == 200) {
-                    val redirectUrl = response.body()?.redirectUrl as String
+                    var redirectUrl = response.body()?.redirectUrl as String
                     if (URLUtil.isValidUrl(redirectUrl)) {
                         return complete(true, redirectUrl)
                     }
@@ -52,7 +53,7 @@ class PaymentService(_orderID: String, _amount: Int) {
             }
 
             override fun onFailure(call: Call<PerformInitPHP>?, t: Throwable?) {
-                call?.cancel();
+                call?.cancel()
                 return complete(false, null)
             }
         })
