@@ -306,7 +306,7 @@ class MainActivity : AppCompatActivity() {
         private fun openPaymentLinkReceivedActivity(orderID: String, amount: Int, lang: String) {
             val intent = Intent(this, PaymentLinkReceivedActivity::class.java)
             intent.putExtra("orderID", orderID)
-            intent.putExtra("amount", amount/100) 
+            intent.putExtra("amount", amount/100)
             startActivity(intent)
         }
 
