@@ -11,7 +11,9 @@ import retrofit2.converter.gson.GsonConverterFactory
  */
 internal object APIClient {
 
-    val BASE_URL = "http://10.91.115.5/flipkart/"//"YOUR_URL"  //server call
+    val BASE_URL = "https://payzenindia-q08.lyra-labs.fr/"//"YOUR_URL" //direct Call app
+
+//    val BASE_URL = "http://10.91.115.5/flipkart/"//"YOUR_URL"  //server call
 //    val BASE_URL = "http://192.168.56.1/flipkart/"//"YOUR_URL"
 //    val BASE_URL = "http://192.168.56.1:9090/"//"YOUR_URL"
 

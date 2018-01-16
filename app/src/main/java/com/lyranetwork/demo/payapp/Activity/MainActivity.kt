@@ -206,20 +206,16 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         loadingPanel.visibility = View.GONE
+//        storeAmount("0,00", applicationContext)
+//        storeOrderID("", applicationContext)
+        editTextAmount.setText(getAmount(applicationContext))
+        editTextOrderID.setText(getOrderID(applicationContext))
+
+
+
     }
 
-    /**
-     * Reload MainActivity to update language
-     */
-    private fun reloadMainActivity() {
-        val refresh = Intent(this@MainActivity, MainActivity::class.java)
-        refresh.addFlags(
-                Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-        val options = ActivityOptionsCompat.makeCustomAnimation(applicationContext, android.R.anim.fade_in,
-                                                                android.R.anim.fade_out)
-        ActivityCompat.startActivity(this@MainActivity, refresh, options.toBundle())
-        finish()
-    }
+
 
     override fun onDestroy() {
         super.onDestroy()
@@ -234,8 +230,8 @@ class MainActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         // Store values onPause (values retrieved after language switched)
-        storeAmount(editTextAmount.text.toString(), applicationContext)
-        storeOrderID(editTextOrderID.text.toString(), applicationContext)
+//        storeAmount(editTextAmount.text.toString(), applicationContext)
+//        storeOrderID(editTextOrderID.text.toString(), applicationContext)
     }
 
     override fun onBackPressed() {
@@ -333,7 +329,24 @@ class MainActivity : AppCompatActivity() {
         setLanguageForApp(LanguagesEnum.Companion.identifier(getLang(newBase)), newBase)
     }
 
+    /**
+     * Reload MainActivity to update language
+     */
+    private fun reloadMainActivity() {
+        val refresh = Intent(this@MainActivity, MainActivity::class.java)
+        refresh.addFlags(
+                Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+        val options = ActivityOptionsCompat.makeCustomAnimation(applicationContext, android.R.anim.fade_in,
+                android.R.anim.fade_out)
+        ActivityCompat.startActivity(this@MainActivity, refresh, options.toBundle())
+
+
+
+        finish()
+    }
+
     companion object {
+
         /**
          * Store language on SharedPreferences
          */
@@ -389,6 +402,19 @@ class MainActivity : AppCompatActivity() {
             val editor = context.getSharedPreferences(MY_PREFS_NAME, Context.MODE_PRIVATE).edit()
             editor.putString("orderID", orderID)
             editor.apply()
+        }
+
+        /**
+         * Store orderID on SharedPreferences
+         */
+        fun getOrderID(context: Context): String {
+            val prefs = context.getSharedPreferences(MY_PREFS_NAME, Context.MODE_PRIVATE)
+            try {
+                return prefs.getString("orderID", "")
+            }catch(e: Exception){
+                return "0"
+            }
+
         }
 
         /**
@@ -448,4 +474,5 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
 }

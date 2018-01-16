@@ -15,7 +15,7 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="100dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
@@ -40,6 +40,15 @@
                 app:srcCompat="@drawable/unitedkingdom" />
         </FrameLayout>
 
+        <TextView
+            android:id="@+id/titleGenerateLinkTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:gravity="center_horizontal"
+            android:text="@string/enter_amount_order"
+            android:textColor="@android:color/background_light" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -51,8 +60,7 @@
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginVertical="5dp"
+                android:layout_margin="5dp"
                 android:background="@android:color/background_light"
                 android:orientation="horizontal">
 
@@ -92,8 +100,7 @@
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginVertical="5dp"
+                android:layout_margin="5dp"
                 android:background="@android:color/background_light"
                 android:orientation="horizontal">
 
@@ -113,8 +120,7 @@
                     android:layout_weight="1"
                     android:backgroundTint="@color/bluelyra"
                     android:ems="10"
-                    android:imeOptions="actionDone"
-                    android:inputType="number"
+                    android:inputType="text"
                     android:textColor="@color/bluelyradark2"
                     android:textCursorDrawable="@null"
                     android:visibility="visible"
@@ -134,7 +140,7 @@
                 android:paddingLeft="30dp"
                 android:paddingRight="30dp"
                 android:paddingTop="10dp"
-                android:text="@string/pay_with_payzen"
+                android:text="@string/generate_link"
                 android:textAlignment="center"
                 android:textAllCaps="false"
                 android:textColor="@color/bluelyradark2"

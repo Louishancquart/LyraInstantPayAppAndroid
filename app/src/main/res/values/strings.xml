@@ -3,8 +3,9 @@
     <string name="test">TEST</string>
     <string name="powered_by_lyra">Powered by Lyra</string>
     <string name="pay_with_payzen">Pay with PayZen</string>
+    <string name="generate_link">Create Payment Link</string>
     <string name="loading">Chargement</string>
-    <string name="amount">Amount</string>
+    <string name="amount">Amount </string>
     <string name="email">Email</string>
     <string name="email_confirmation">An email confirmation have been sent to %1$s</string>
     <string name="error_occured">An error occurs : %1$s</string>
@@ -20,10 +21,16 @@
     <string name="qr_code_image">qrcode image</string>
     <string name="payzen_logo">payzen logo</string>
     <string name="check_status">check status</string>
-    <string name="orderID">Order ID</string>
+    <string name="orderID">Order ID </string>
     <string name="login">login</string>
     <string name="invalid_shop_id">invalid shop ID</string>
     <string name="invalid_certificate">invalid certificate</string>
+    <string name="first_time_here">First time here?</string>
+    <string name="enter_credentials">Please enter your credentials:</string>
+    <string name="enter_amount_order">Enter amount and orderID</string>
+    <string name="payment_generated1">SCAN it from anywhere!</string>
+    <string name="payment_generated2">SHARE it everywhere! </string>
+    <string name="scan_or_share">SCAN or SHARE</string>
 
 
 
@@ -42,6 +49,7 @@
     </string-array>
     <string name="all">All</string>
     <string name="areyousureexit">Are you sure you want to exit?</string>
+    <string name="areyousurecancel">Are you sure you want to cancel the order?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
 
