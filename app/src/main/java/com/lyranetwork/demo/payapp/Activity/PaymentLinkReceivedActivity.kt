@@ -5,6 +5,8 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.ActivityOptionsCompat
@@ -25,6 +27,7 @@ import kotlinx.android.synthetic.main.paymentlinkreceived.*
 import net.glxn.qrgen.android.QRCode
 import okhttp3.*
 import java.io.IOException
+import java.util.*
 
 /**
  * Display the failed payment
@@ -33,7 +36,7 @@ class PaymentLinkReceivedActivity : AppCompatActivity() {
 
     lateinit var body: String
     var payment_paid: Boolean = false //payment paid status : true: paid, false: not paid
-    lateinit var paymentUrl:String
+    var paymentUrl: String =""
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,7 +52,7 @@ class PaymentLinkReceivedActivity : AppCompatActivity() {
 //        val lang = intent.getStringExtra("lang")
 
 
-        amountTextView2.setText( amount.toString() + " INR")
+        amountTextView2.setText(amount.toString() + " INR")
         orderIDTextView2.setText(orderID)
 
 
@@ -65,6 +68,7 @@ class PaymentLinkReceivedActivity : AppCompatActivity() {
 
                         textViewPoweredByLinkReceived.setText("NETWORK ERROR!!!!")
                         textViewPoweredByLinkReceived.setTextColor(resources.getColor(R.color.red))
+//                        goToMainActivity()
 
                         // Fine, we get a payment url
                     } else {
@@ -76,12 +80,13 @@ class PaymentLinkReceivedActivity : AppCompatActivity() {
                        * Generate bitmap from the text provided,
                        * The QR code can be saved using other methods such as stream(), file(), to() etc.
                        * */
-                        val bitmap = QRCode.from(urlPayment).bitmap()
+                        val bitmap = QRCode.from(urlPayment).withSize(layoutQRCode.height-10, layoutQRCode.height-10).bitmap()
                         imageViewQRCode.setImageBitmap(bitmap)
+                        imageViewQRCode.setPadding(5,5,5,5)
 
 
 
-                        buttonShareLink.setOnClickListener(object : View.OnClickListener {
+                        imageViewQRCode.setOnClickListener(object : View.OnClickListener {
                             override fun onClick(p0: View?) {
 
                                 val sendIntent = Intent()
@@ -95,20 +100,47 @@ class PaymentLinkReceivedActivity : AppCompatActivity() {
                         })
 
 
-                        //payment status
-                        buttonCheckStatus.setOnClickListener(object : View.OnClickListener {
-                            override fun onClick(p0: View?) {
+//                        //payment status
+//                        buttonCheckStatus.setOnClickListener(object : View.OnClickListener {
+//                            override fun onClick(p0: View?) {
+//
+//                                if (!payment_paid) {
+//                                    Log.d("Payment Status", "check status")
+//                                    checkPaymentStatus(urlPayment)
+//                                }
+////                                goToMainActivity()
+//                            }
+//                        })
 
-                                if (!payment_paid) {
-                                    Log.d("Payment Status", "check status")
-                                    checkPaymentStatus(urlPayment)
-                                }
-//                                goToMainActivity()
-                            }
-                        })
+//                        //check for payment
+//                        for(i in 1..100){
+//                            if (!payment_paid) {
+//                                    Thread.sleep(3000)
+//                                    Log.d("Payment Status", "check status")
+//                                    checkPaymentStatus(urlPayment)
+//                                }
+//                        }
 
-
+                        //Force progress bar color
+                        progressBarPaymentReceived.getIndeterminateDrawable().setColorFilter(resources.getColor(R.color.bluelyradark),
+                                PorterDuff.Mode.MULTIPLY)
                         textViewPoweredByLinkReceived.setText(resources.getString(R.string.powered_by_lyra) + " v" + BuildConfig.VERSION_NAME)
+
+                        val waitingTimer = Timer()
+                        waitingTimer.schedule(object : TimerTask() {
+                            override fun run() {
+                                runOnUiThread {
+                                    Log.d("Timer", "payment paid? :"+ payment_paid)
+                                    if (!payment_paid) {
+
+                                            satusImageView.visibility = View.GONE
+                                            loadingPanelPaymentReceived.visibility = View.VISIBLE
+                                        checkPaymentStatus(urlPayment)
+
+                                    }
+                                }
+                            }
+                        }, 3000, 3000) // mention time interval after which your xml will be hit.
 
                     }
                 }
@@ -127,8 +159,8 @@ class PaymentLinkReceivedActivity : AppCompatActivity() {
                         Html.fromHtml("<font color='#293c7a'>" + resources.getString(R.string.yes) + "</font>"),
                         object : DialogInterface.OnClickListener {
                             override fun onClick(p0: DialogInterface?, p1: Int) {
-                                MainActivity.storeAmount("0,00",applicationContext)
-                                MainActivity.storeOrderID("",applicationContext)
+                                MainActivity.storeAmount("0,00", applicationContext)
+                                MainActivity.storeOrderID("", applicationContext)
                                 cancelPayment(paymentUrl)
 
                                 finish()
@@ -138,7 +170,6 @@ class PaymentLinkReceivedActivity : AppCompatActivity() {
                         Html.fromHtml("<font color='#293c7a'>" + resources.getString(R.string.no) + "</font>"), null)
                 .show()
     }
-
 
 
     @Throws(IOException::class)
@@ -156,14 +187,20 @@ class PaymentLinkReceivedActivity : AppCompatActivity() {
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {}
             override fun onResponse(call: Call, response: Response) {
+                /**For further implementation, check following:
+                 * https://medium.com/@macastiblancot/android-coroutines-getting-rid-of-runonuithread-and-callbacks-cleaner-thread-handling-and-more-234c0a9bd8eb
+                 */
 
                 body = response.body().string()
                 this@PaymentLinkReceivedActivity.runOnUiThread({
+                    loadingPanelPaymentReceived.visibility = View.GONE
                     satusImageView.visibility = View.VISIBLE
+                    //check for payment
+//                    satusImageView.visibility = View.VISIBLE
 
                     if (body.contains("PAYMENT_SUCCESS_TEMPLATE")) {
                         Log.d("Payment Status", "Contains SUCCESS")
-                        buttonCheckStatus.setText(resources.getString(R.string.payment_success))
+                        titleQRTextView.setText(resources.getString(R.string.payment_success))
                         satusImageView.setImageDrawable(ResourcesCompat.getDrawable(resources,
                                 R.drawable.accepted, null))
                         payment_paid = true
@@ -171,32 +208,45 @@ class PaymentLinkReceivedActivity : AppCompatActivity() {
                         Log.d("Payment Status", "Contains REFUSE")
                         satusImageView.setImageDrawable(ResourcesCompat.getDrawable(resources,
                                 R.drawable.refused, null))
-                        buttonCheckStatus.setText(resources.getString(R.string.refused_payment))
+                        titleQRTextView.setText(resources.getString(R.string.refused_payment))
                         payment_paid = false
-                    }
-                    else if (body.contains("PAYMENT_CANCELED")) {
+                    } else if (body.contains("PAYMENT_CANCELED")) {
                         Log.d("Payment Status", "Contains REFUSE")
                         satusImageView.setImageDrawable(ResourcesCompat.getDrawable(resources,
                                 R.drawable.refused, null))
-                        buttonCheckStatus.setText(resources.getString(R.string.abandonned_payment))
+                        titleQRTextView.setText(resources.getString(R.string.abandonned_payment))
                         payment_paid = false
                     } else {
                         Log.d("Payment Status", "NO STATUS YET")
+
                     }
+
+
+//                    if (!payment_paid) {
+//                        satusImageView.visibility = View.GONE
+//                        loadingPanelPaymentReceived.visibility = View.VISIBLE
+//                        Thread.sleep(3000)
+//                        loadingPanelPaymentReceived.visibility = View.GONE
+//                        satusImageView.visibility = View.VISIBLE
+//
+//                        Log.d("Payment Status", "check status")
+////                            checkPaymentStatus(urlPayment)
+//
+//                    }
 
                 })
 
             }
         })
 
+
     }
 
     @Throws(IOException::class)
     private fun cancelPayment(urlPayment: String?) {
 
-//        https://payzenindia-q08.lyra-labs.fr:443/vads-payment/exec.refresh.a;jsessionid=A82dFEcAB6caFDc2Cb4E3e24.?RemoteId=1437816e6f1c4138baf0219ffc8c92d9&cacheId=223221731801151234221
-        val cancelUrl: String = urlPayment!!.replace("exec.refresh.a","exec.cancel.a")
-        println("cancel URL : "+ cancelUrl)
+        val cancelUrl: String = urlPayment!!.replace("exec.refresh.a", "exec.cancel.a")
+        println("cancel URL : " + cancelUrl)
 
         Log.d("Payment Status", "Request Http")
         val client = OkHttpClient()
@@ -212,10 +262,11 @@ class PaymentLinkReceivedActivity : AppCompatActivity() {
 
                 Log.d("Payment Status", "Request NNNNNNNNOK")
             }
+
             override fun onResponse(call: Call, response: Response) {
 
                 body = response.body().string()
-                println("payment cancelled: "+ body )
+//                println("payment cancelled: "+ body )
                 Log.d("Payment Status", "Request OKKK")
 
 
@@ -224,6 +275,11 @@ class PaymentLinkReceivedActivity : AppCompatActivity() {
 
     }
 
+    override fun onPause() {
+        super.onPause()
+        MainActivity.storeAmount("0,00", applicationContext)
+        MainActivity.storeOrderID("", applicationContext)
+    }
 
 
     /**
@@ -262,13 +318,32 @@ class PaymentLinkReceivedActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         // Erase values on destroy
-        MainActivity.storeAmount("0,00", applicationContext)
-        MainActivity.storeOrderID("", applicationContext)
-Log.d("DESTROY","ondestroy called")
+//        MainActivity.storeAmount("0,00", applicationContext)
+//        MainActivity.storeOrderID("", applicationContext)
+//        Log.d("DESTROY","ondestroy called")
 
         if (isFinishing()) {
             //call some method
-            cancelPayment(paymentUrl)
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        //call some method
+        MainActivity.storeAmount("0,00", applicationContext)
+        MainActivity.storeOrderID("", applicationContext)
+        Log.d("DESTROY", "ondestroy called")
+//        cancelPayment(paymentUrl)
+
+
+        if (isFinishing()) {
+            //call some method
+            MainActivity.storeAmount("0,00", applicationContext)
+            MainActivity.storeOrderID("", applicationContext)
+            Log.d("DESTROY", "ondestroy called in ISFINISHING!!!")
+
+            if (!paymentUrl.isNullOrEmpty())
+                cancelPayment(paymentUrl)
         }
     }
 }

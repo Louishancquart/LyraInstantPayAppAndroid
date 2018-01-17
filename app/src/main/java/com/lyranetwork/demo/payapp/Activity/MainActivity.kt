@@ -84,9 +84,10 @@ class MainActivity : AppCompatActivity() {
      * Init EditText with stored values
      */
     private fun initEditText() {
-        editTextOrderID.setText(getEmail(applicationContext), TextView.BufferType.NORMAL)
-        val amount: String = getAmount(applicationContext)
+        editTextOrderID.setText("", TextView.BufferType.NORMAL)
+        val amount: String = "0,00" //getAmount(applicationContext)
         editTextAmount.setText(amount, TextView.BufferType.NORMAL)
+
     }
 
     /**

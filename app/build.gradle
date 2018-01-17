@@ -54,4 +54,5 @@ dependencies {
     compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
     compile 'com.github.kenglxn.QRGen:android:2.3.0'
     compile 'com.mcxiaoke.koi:core:0.5.5' // useful extensions (only ~100k)
+    compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.10'
 }
