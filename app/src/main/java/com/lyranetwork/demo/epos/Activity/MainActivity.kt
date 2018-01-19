@@ -1,4 +1,4 @@
-package com.lyranetwork.demo.payapp.Activity
+package com.lyranetwork.demo.epos.Activity
 
 import android.app.AlertDialog
 import android.content.Context
@@ -21,9 +21,9 @@ import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
 import android.widget.*
-import com.lyranetwork.demo.payapp.BuildConfig
-import com.lyranetwork.demo.payapp.R
-import com.lyranetwork.demo.payapp.Util.MyContextWrapper
+import com.lyranetwork.demo.epos.BuildConfig
+import com.lyranetwork.demo.epos.R
+import com.lyranetwork.demo.epos.Util.MyContextWrapper
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
@@ -87,7 +87,6 @@ class MainActivity : AppCompatActivity() {
         editTextOrderID.setText("", TextView.BufferType.NORMAL)
         val amount: String = "0,00" //getAmount(applicationContext)
         editTextAmount.setText(amount, TextView.BufferType.NORMAL)
-
     }
 
     /**
@@ -207,8 +206,6 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         loadingPanel.visibility = View.GONE
-//        storeAmount("0,00", applicationContext)
-//        storeOrderID("", applicationContext)
         editTextAmount.setText(getAmount(applicationContext))
         editTextOrderID.setText(getOrderID(applicationContext))
 
@@ -287,15 +284,7 @@ class MainActivity : AppCompatActivity() {
         return currentAmount != null && currentAmount > 0 && currentAmount <= 500000
     }
 
-    /**
-     * Open WebviewActivity (contains a WebView)
-     */
-    private fun openWebViewActivity(orderID: String, amount: Int, lang: String) {
-        val intent = Intent(this, WebviewActivity::class.java)
-        intent.putExtra("orderID", orderID)
-        intent.putExtra("amount", amount)
-        startActivity(intent)
-    }
+
 
         /**
          * Open WebviewActivity (contains a WebView)
@@ -303,7 +292,7 @@ class MainActivity : AppCompatActivity() {
         private fun openPaymentLinkReceivedActivity(orderID: String, amount: Int, lang: String) {
             val intent = Intent(this, PaymentLinkReceivedActivity::class.java)
             intent.putExtra("orderID", orderID)
-            intent.putExtra("amount", amount/100)
+            intent.putExtra("amount", amount )
             startActivity(intent)
         }
 

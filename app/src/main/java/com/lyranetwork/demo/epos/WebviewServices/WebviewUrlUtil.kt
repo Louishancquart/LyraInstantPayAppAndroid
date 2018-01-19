@@ -1,4 +1,4 @@
-package com.lyranetwork.demo.payapp.WebviewServices
+package com.lyranetwork.demo.epos.WebviewServices
 
 import android.util.Log
 import java.io.Serializable

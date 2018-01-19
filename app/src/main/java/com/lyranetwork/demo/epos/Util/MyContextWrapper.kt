@@ -1,4 +1,4 @@
-package com.lyranetwork.demo.payapp.Util
+package com.lyranetwork.demo.epos.Util
 
 import android.annotation.TargetApi
 import android.content.Context

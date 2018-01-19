@@ -1,21 +1,15 @@
-package com.lyranetwork.demo.payapp.WebviewServices
+package com.lyranetwork.demo.epos.WebviewServices
 
-import android.content.ContentValues.TAG
 import android.util.Log
 import android.webkit.URLUtil
-import com.lyranetwork.demo.payapp.retrofit.APIClient
-import com.lyranetwork.demo.payapp.retrofit.APIInterface
-import com.lyranetwork.demo.payapp.retrofit.PayzenParams
-import com.lyranetwork.demo.payapp.retrofit.PerformInitPHP
-import com.mcxiaoke.koi.ext.asString
-import com.mcxiaoke.koi.ext.dateNow
-import com.mcxiaoke.koi.ext.dateParse
+import com.lyranetwork.demo.epos.retrofit.APIClient
+import com.lyranetwork.demo.epos.retrofit.APIInterface
+import com.lyranetwork.demo.epos.retrofit.PayzenParams
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
-import java.text.DateFormat
 import java.text.SimpleDateFormat
 //import java.util.TimeZone
 //import java.time.ZonedDateTime
@@ -23,9 +17,9 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class PaymentService(_orderID: String, _amount: Int) {
+class PaymentService(_orderID: String, _amount: Double) {
     var orderID = _orderID
-    var amount = _amount * 100
+    var amount = (_amount*100).toInt() //convert to decimal as PayZen need it
 
     val merchantProdKey = "1365613330086542" //"1365613330086542"; 2503256198873034
 

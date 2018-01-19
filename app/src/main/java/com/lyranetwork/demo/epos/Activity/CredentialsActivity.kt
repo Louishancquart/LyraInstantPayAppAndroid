@@ -1,4 +1,4 @@
-package com.lyranetwork.demo.payapp.Activity
+package com.lyranetwork.demo.epos.Activity
 
 import android.app.AlertDialog
 import android.content.Context
@@ -14,20 +14,16 @@ import android.text.TextWatcher
 import android.view.Gravity
 import android.view.View
 import android.widget.TextView
-import com.lyranetwork.demo.payapp.BuildConfig
-import com.lyranetwork.demo.payapp.R
-import com.lyranetwork.demo.payapp.Util.MyContextWrapper
-import kotlinx.android.synthetic.main.activity_main.*
+import com.lyranetwork.demo.epos.BuildConfig
+import com.lyranetwork.demo.epos.R
+import com.lyranetwork.demo.epos.Util.MyContextWrapper
 import kotlinx.android.synthetic.main.credentials.*
-import kotlinx.android.synthetic.main.paymentsuccess.*
 import java.util.*
 
 /**
  * Display the success payment
  */
 class CredentialsActivity : AppCompatActivity() {
-
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,32 +69,11 @@ class CredentialsActivity : AppCompatActivity() {
         //Login
         buttonLogin?.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View) {
-//                if (isPaymentValid()) {
-
-//                    val orderID = editTextOrderID.text.toString()
-//                    val amount = editTextAmount.text.toString().replace(",", "").replace(".", "").toInt()
-
-                    val lang = MainActivity.getLang(applicationContext).toString()
-
-                    // Go to MainActivity
-//                    loadingPanel.visibility = View.VISIBLE
-                storeCertificate(editTextCertificate.text.toString(),applicationContext)
-                storeShopID(editTextShopID.text.toString(),applicationContext)
-                    goToMainActivity()
+                // Go to MainActivity
+                storeCertificate(editTextCertificate.text.toString(), applicationContext)
+                storeShopID(editTextShopID.text.toString(), applicationContext)
+                goToMainActivity()
                 finish()
-//
-//                } else {
-//                    if (!isAmountValid()) {
-//                        if (editTextAmount.text.toString().equals("0,00")) editTextAmount.error = resources.getString(
-//                                R.string.invalid_input)
-//                        else editTextAmount.error = resources.getString(R.string.invalid_amount)
-//                    }
-//                    if (!isOrderValid()) {
-//                        if (TextUtils.isEmpty(editTextOrderID?.text)) editTextOrderID.error = resources.getString(
-//                                R.string.invalid_input)
-//                        else editTextOrderID.error = resources.getString(R.string.invalid_order)
-//                    }
-//                }
             }
         })
 
@@ -140,7 +115,7 @@ class CredentialsActivity : AppCompatActivity() {
      * Display error on ShopID editText if value not valid
      */
     private fun updateShopIDEditTextState() {
-        if (TextUtils.isEmpty(editTextShopID.text) ) {
+        if (TextUtils.isEmpty(editTextShopID.text)) {
             editTextShopID.error = resources.getString(R.string.invalid_shop_id)
         }
     }
@@ -149,11 +124,10 @@ class CredentialsActivity : AppCompatActivity() {
      * Display error on Certificae editText if value not valid
      */
     private fun updateCertificateEditTextState() {
-        if (TextUtils.isEmpty(editTextShopID.text) ) {
+        if (TextUtils.isEmpty(editTextShopID.text)) {
             editTextCertificate.error = resources.getString(R.string.invalid_certificate)
         }
     }
-
 
 
     /**
@@ -174,8 +148,6 @@ class CredentialsActivity : AppCompatActivity() {
         super.attachBaseContext(MyContextWrapper.wrap(newBase, MainActivity.LanguagesEnum.Companion.identifier(MainActivity.Companion.getLang(newBase))))
         MainActivity.Companion.setLanguageForApp(MainActivity.LanguagesEnum.identifier(MainActivity.getLang(newBase)), newBase)
     }
-
-
 
 
     /**

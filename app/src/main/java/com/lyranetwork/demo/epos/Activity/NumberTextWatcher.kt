@@ -1,10 +1,10 @@
-package com.lyranetwork.demo.payapp.Activity
+package com.lyranetwork.demo.epos.Activity
 
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.widget.EditText
-import com.lyranetwork.demo.payapp.R
+import com.lyranetwork.demo.epos.R
 import java.util.*
 
 

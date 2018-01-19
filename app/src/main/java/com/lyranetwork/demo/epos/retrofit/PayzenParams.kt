@@ -1,4 +1,5 @@
-package com.lyranetwork.demo.payapp.retrofit
+package com.lyranetwork.demo.epos.retrofit
+
 
 import com.google.gson.annotations.SerializedName
 
@@ -6,7 +7,7 @@ import com.google.gson.annotations.SerializedName
 /**
  * Retrofit performInit response
  */
-class PerformInitPHP {
+class PayzenParams {
     @SerializedName("redirect_url")
     var redirectUrl: String? = null
 }

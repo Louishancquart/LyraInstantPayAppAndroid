@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Lyra Demo</string>
+    <string name="app_name">PayZen ePOS Demo</string>
     <string name="test">TEST</string>
     <string name="powered_by_lyra">Powered by Lyra</string>
     <string name="pay_with_payzen">Pay with PayZen</string>
@@ -58,5 +58,10 @@
     <string name="abandonned_payment">Abandoned payment</string>
     <string name="expired_payment">Expired payment</string>
     <string name="network_error_payment">Unavailable operation due to connectivity failure</string>
+    <string name="status_image_desc">payment status image</string>
+    <string name="header_image">header image</string>
+    <string name="lang_button">lang button</string>
+    <string name="amount_image">amount image</string>
+    <string name="orderid_image">order ID image</string>
 
 </resources>

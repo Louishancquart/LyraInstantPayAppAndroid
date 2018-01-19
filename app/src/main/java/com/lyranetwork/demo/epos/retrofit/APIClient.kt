@@ -1,4 +1,4 @@
-package com.lyranetwork.demo.payapp.retrofit
+package com.lyranetwork.demo.epos.retrofit
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

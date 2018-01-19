@@ -1,4 +1,4 @@
-package com.lyranetwork.demo.payapp.retrofit
+package com.lyranetwork.demo.epos.retrofit
 
 import retrofit2.Call
 import retrofit2.http.*

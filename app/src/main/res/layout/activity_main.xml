@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:background="@drawable/screen"
         android:orientation="vertical"
-        tools:context="com.lyranetwork.demo.payapp.Activity.MainActivity">
+        tools:context="com.lyranetwork.demo.epos.Activity.MainActivity">
 
 
         <FrameLayout
@@ -28,16 +28,18 @@
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                app:srcCompat="@drawable/header" />
+                app:srcCompat="@drawable/header"
+                android:contentDescription="@string/header_image" />
 
             <ImageButton
                 android:id="@+id/imageButtonLang"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
-                android:layout_gravity="right"
+                android:layout_gravity="end"
                 android:background="@drawable/unitedkingdom"
                 android:scaleType="fitXY"
-                app:srcCompat="@drawable/unitedkingdom" />
+                app:srcCompat="@drawable/unitedkingdom"
+                android:contentDescription="@string/lang_button" />
         </FrameLayout>
 
         <TextView
@@ -71,7 +73,8 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/inr" />
+                    app:srcCompat="@drawable/inr"
+                    android:contentDescription="@string/amount_image" />
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -82,7 +85,6 @@
                         android:id="@+id/editTextAmount"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
                         android:backgroundTint="@color/bluelyra"
                         android:ems="10"
                         android:imeOptions="actionNext"
@@ -91,7 +93,8 @@
                         android:textColor="@color/bluelyradark2"
                         android:textCursorDrawable="@null"
                         android:visibility="visible"
-                        tools:text="amount" />
+                        tools:hint="amount"
+                        tools:ignore="LabelFor" />
                 </FrameLayout>
 
             </LinearLayout>
@@ -111,7 +114,8 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/order_id" />
+                    app:srcCompat="@drawable/order_id"
+                    android:contentDescription="@string/orderid_image" />
 
                 <EditText
                     android:id="@+id/editTextOrderID"
@@ -119,12 +123,15 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:backgroundTint="@color/bluelyra"
+                    android:digits="abcdefghijklmnopqrstuvwxyz1234567890"
                     android:ems="10"
+                    android:imeOptions="actionDone"
                     android:inputType="text"
+                    android:singleLine="true"
                     android:textColor="@color/bluelyradark2"
                     android:textCursorDrawable="@null"
                     android:visibility="visible"
-                    tools:text="Your Order ID" />
+                    tools:hint="Your Order ID" />
 
             </LinearLayout>
 
@@ -152,36 +159,6 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:orientation="horizontal">
-
-                <!--
-                <ToggleButton
-                    android:id="@+id/toggleButtonModeTest"
-                    android:layout_width="300dp"
-                    android:layout_height="35dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="30dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/togglebackground"
-                    android:clickable="false"
-                    android:text="@string/test"
-                    android:textColor="@color/bluelyradark2"
-                    android:textOff="@string/test"
-                    android:textOn="@string/test" />
-
-                <ToggleButton
-                    android:id="@+id/toggleButtonModeProduction"
-                    android:layout_width="300dp"
-                    android:layout_height="35dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="30dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/togglebackground"
-                    android:clickable="false"
-                    android:text="@string/production"
-                    android:textColor="@color/bluelyradark2"
-                    android:textOff="@string/production"
-                    android:textOn="@string/production" />
-                    -->
             </LinearLayout>
 
         </LinearLayout>

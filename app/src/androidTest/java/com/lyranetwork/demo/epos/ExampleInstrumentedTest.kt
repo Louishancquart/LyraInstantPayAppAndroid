@@ -1,4 +1,4 @@
-package com.lyranetwork.demo.payapp
+package com.lyranetwork.demo.epos
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4

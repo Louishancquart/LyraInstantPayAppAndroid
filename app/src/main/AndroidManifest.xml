@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.lyranetwork.demo.payapp">
+    package="com.lyranetwork.demo.epos">
 
     <application
         android:allowBackup="true"
@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
-            android:name=".Activity.MainActivity"
+            android:name="com.lyranetwork.demo.epos.Activity.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,19 +19,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activity.WebviewActivity"
+            android:name="com.lyranetwork.demo.epos.Activity.PaymentLinkReceivedActivity"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".Activity.PaymentSuccessActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity
-            android:name=".Activity.PaymentFailureActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity
-            android:name=".Activity.PaymentLinkReceivedActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity
-            android:name=".Activity.CredentialsActivity"
+            android:name="com.lyranetwork.demo.epos.Activity.CredentialsActivity"
             android:screenOrientation="portrait"></activity>
     </application>
 
